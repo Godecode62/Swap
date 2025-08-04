@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}S'inscrire - SwapIt{% endblock %}
+
+{% block content %}
+<div class="max-w-md lg:max-w-lg mx-auto bg-gray-800 p-8 rounded-3xl shadow-2xl mt-10 border border-gray-700 transform hover:scale-[1.01] transition duration-300 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-700 to-purple-700 opacity-10 blur-xl scale-150 animate-pulse-slow"></div>
+
+    <h2 class="text-4xl font-extrabold text-white text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 relative z-10">Rejoignez SwapIt</h2>
+    
+    <form method="post" class="space-y-6 relative z-10">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="bg-red-900 border border-red-700 text-red-100 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                <strong class="font-bold">Erreur :</strong>
+                <span class="block sm:inline">Veuillez corriger les problèmes suivants :</span>
+                <ul class="mt-2 list-disc list-inside">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {# Affichage du champ username avec ses erreurs #}
+        <div class="mb-4">
+            <label for="{{ form.username.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 transition-colors duration-200 group-focus-within:text-cyan-400">{{ form.username.label }}</label>
+            {{ form.username }}
+            {% for error in form.username.errors %}
+                <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {# Affichage du champ email avec ses erreurs #}
+        <div class="mb-4">
+            <label for="{{ form.email.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 transition-colors duration-200 group-focus-within:text-cyan-400">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% for error in form.email.errors %}
+                <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {# Affichage du champ city avec ses erreurs #}
+        <div class="mb-4">
+            <label for="{{ form.city.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 transition-colors duration-200 group-focus-within:text-cyan-400">{{ form.city.label }}</label>
+            {{ form.city }}
+            {% for error in form.city.errors %}
+                <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {# Affichage du champ phone_number avec ses erreurs #}
+        <div class="mb-4">
+            <label for="{{ form.phone_number.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 transition-colors duration-200 group-focus-within:text-cyan-400">{{ form.phone_number.label }}</label>
+            {{ form.phone_number }}
+            {% for error in form.phone_number.errors %}
+                <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {# Champ Password 1 avec l'icône œil #}
+        <div class="mb-4">
+            <label for="{{ form.password1.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 transition-colors duration-200 group-focus-within:text-cyan-400">{{ form.password1.label }}</label>
+            <div class="relative">
+                {{ form.password1 }}
+                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer" onclick="togglePasswordVisibility('{{ form.password1.id_for_label }}', this)">
+                    <i class="fas fa-eye" data-icon="eye"></i>
+                </span>
+            </div>
+            {% for error in form.password1.errors %}
+                <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {# Champ Password 2 (confirmation) avec l'icône œil #}
+        <div class="mb-4">
+            <label for="{{ form.password2.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 transition-colors duration-200 group-focus-within:text-cyan-400">{{ form.password2.label }}</label>
+            <div class="relative">
+                {{ form.password2 }}
+                <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer" onclick="togglePasswordVisibility('{{ form.password2.id_for_label }}', this)">
+                    <i class="fas fa-eye" data-icon="eye"></i>
+                </span>
+            </div>
+            {% for error in form.password2.errors %}
+                <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center">
+            <i class="fas fa-user-plus mr-3"></i> S'inscrire maintenant !
+        </button>
+    </form>
+    
+    <p class="mt-6 text-center text-gray-400 relative z-10">Déjà un compte ? <a href="{% url 'login' %}" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors duration-200">Connectez-vous ici</a></p>
+</div>
+
+<script>
+    function togglePasswordVisibility(fieldId, iconElement) {
+        const passwordField = document.getElementById(fieldId);
+        const icon = iconElement.querySelector('i');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>
+{% endblock %}

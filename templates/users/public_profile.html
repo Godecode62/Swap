@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profil de {{ profile_user.username }}{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-start justify-center py-16 px-4 bg-gray-900">
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 opacity-90"></div>
+    
+    <div class="w-full max-w-4xl mx-auto relative z-10 bg-gray-800 bg-opacity-70 border border-gray-700 rounded-3xl p-8 shadow-2xl space-y-10">
+
+        <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8 pb-8 border-b border-gray-700">
+            <div class="relative w-40 h-40 flex-shrink-0">
+                {% if profile_user.profile_picture %}
+                    <img src="{{ profile_user.profile_picture.url }}" alt="Photo de profil de {{ profile_user.username }}" class="w-full h-full rounded-full object-cover border-4 border-purple-500 shadow-xl transform hover:scale-105 transition-transform duration-300">
+                {% else %}
+                    <img src="{% static 'images/avatar.png' %}" alt="Photo de profil par défaut" class="w-full h-full rounded-full object-cover border-4 border-purple-500 shadow-xl transform hover:scale-105 transition-transform duration-300">
+                {% endif %}
+            </div>
+            
+            <div class="flex-1 text-center md:text-left space-y-2">
+                <h1 class="text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">{{ profile_user.username }}</span>
+                </h1>
+                <p class="text-gray-300 text-lg italic leading-relaxed">
+                    {{ profile_user.bio|default:"L'échange est ma passion, donner une seconde vie aux objets ma mission. J'ai hâte de découvrir ce que la communauté a à offrir" }}
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+                    {% if is_active %}
+                    <span class="bg-green-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-md">Membre Actif</span>
+                    {% endif %}
+                    {% if accepted_trades_count > 0 %}
+                    <span class="bg-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-md">{{ accepted_trades_count }} Échange{% if accepted_trades_count > 1 %}s{% endif %}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold text-white mb-6">Informations personnelles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-center space-x-4 bg-gray-700 bg-opacity-40 p-4 rounded-xl shadow-md transform hover:scale-105 hover:bg-opacity-50 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-600 rounded-full flex-shrink-0 flex items-center justify-center text-blue-400 text-2xl">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Adresse Email</p>
+                        <p class="text-white font-semibold break-words">{{ profile_user.email }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 bg-gray-700 bg-opacity-40 p-4 rounded-xl shadow-md transform hover:scale-105 hover:bg-opacity-50 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-600 rounded-full flex-shrink-0 flex items-center justify-center text-green-400 text-2xl">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Ville</p>
+                        <p class="text-white font-semibold">{{ profile_user.city|default:"Non spécifié" }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 bg-gray-700 bg-opacity-40 p-4 rounded-xl shadow-md transform hover:scale-105 hover:bg-opacity-50 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-600 rounded-full flex-shrink-0 flex items-center justify-center text-yellow-400 text-2xl">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Téléphone</p>
+                        <p class="text-white font-semibold">{{ profile_user.phone_number|default:"Non spécifié" }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 bg-gray-700 bg-opacity-40 p-4 rounded-xl shadow-md transform hover:scale-105 hover:bg-opacity-50 transition duration-300">
+                    <div class="w-12 h-12 bg-gray-600 rounded-full flex-shrink-0 flex items-center justify-center text-purple-400 text-2xl">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Membre depuis</p>
+                        <p class="text-white font-semibold">{{ profile_user.date_joined|date:"d F Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold text-white mb-6">Objets de {{ profile_user.username }}</h2>
+            {% if items %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for item in items %}
+                        <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:scale-105 transition-transform duration-300">
+                            <a href="{% url 'item_detail' item.pk %}">
+                                <img src="{{ item.photo.url }}" alt="{{ item.title }}" class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold text-white">{{ item.title }}</h3>
+                                    <p class="text-gray-400 text-sm">{{ item.category.name|default:"Sans catégorie" }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-gray-400">Cet utilisateur n'a pas encore d'objets disponibles pour le troc.</p>
+            {% endif %}
+        </div>
+        
+        <div class="mt-8">
+            <div class="flex flex-col md:flex-row md:justify-center items-center gap-4">
+                <a href="{% url 'start_conversation' user_pk=profile_user.pk %}" class="w-full md:w-auto inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-envelope mr-3"></i> Contacter
+                </a>
+                <a href="{% url 'report_create' report_type='user' pk=profile_user.pk %}" class="w-full md:w-auto inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-flag mr-3"></i> Signaler l'utilisateur
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

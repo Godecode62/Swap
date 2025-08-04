@@ -1,0 +1,57 @@
+  Yo c'est comme ca que j'ai pu mettre tailwindcss dans mon projet okay..
+
+┌──(hadi㉿kali)-[~/…/Hadi/code/dj_project/Swap]
+└─$ npm init -y                                    
+Wrote to /home/hadi/Desktop/Hadi/code/dj_project/Swap/package.json:
+
+{
+  "name": "swap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+
+
+
+                                                                                                      
+┌──(hadi㉿kali)-[~/…/Hadi/code/dj_project/Swap]
+└─$ npm install -D tailwindcss@3.4.4 postcss@8.4.38 autoprefixer@10.4.19
+
+added 121 packages, and audited 122 packages in 1m
+
+34 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+                                                                                                      
+┌──(hadi㉿kali)-[~/…/Hadi/code/dj_project/Swap]
+└─$ ls ./node_modules/tailwindcss/lib/cli.js
+./node_modules/tailwindcss/lib/cli.js
+                                                                                                      
+┌──(hadi㉿kali)-[~/…/Hadi/code/dj_project/Swap]
+└─$ npx tailwindcss init -p
+
+Created Tailwind CSS config file: tailwind.config.js
+Created PostCSS config file: postcss.config.js
+            
+        
+npm run tailwind:watch
+
+
+
+
+
+La CAF C'EST une aide de logement qu'il nous font genre il nous aide à payer le loyer
+  si ils nous aident pour tous les mois precednts jusqu'au l'heure actuelle 
+
+      condition::
+        logement à son nom 
+        petit salaire
+        logement eligible a la CAF
+  Ko ils vont nous aider pour les logements vu qu'ils ont des potes qui gerent

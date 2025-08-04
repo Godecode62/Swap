@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Signaler{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen py-16 px-4 bg-gray-950 overflow-hidden font-sans text-gray-200 flex items-center justify-center">
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+    <div class="w-full max-w-2xl mx-auto p-8 relative z-10 bg-gray-900 rounded-3xl shadow-2xl backdrop-blur-xl border border-gray-700 animate-fade-in-up">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500 mb-2 animate-shine">
+                Signaler un {% if report_type == 'user' %}utilisateur{% else %}article{% endif %}
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400">
+                Merci de nous signaler tout contenu inapproprié pour maintenir la sécurité de notre communauté.
+            </p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="p-4 bg-gray-800 rounded-lg border border-gray-700">
+                <p class="text-gray-400 mb-2">Vous êtes sur le point de signaler :</p>
+                <p class="text-white text-xl font-bold">
+                    {% if report_type == 'user' %}
+                        L'utilisateur : {{ reported_content.username }}
+                    {% else %}
+                        L'annonce : {{ reported_content.title }}
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div>
+                <label for="{{ form.reason.id_for_label }}" class="block text-gray-300 font-bold mb-2">Raison du signalement</label>
+                {{ form.reason }}
+            </div>
+            
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                Envoyer le signalement
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

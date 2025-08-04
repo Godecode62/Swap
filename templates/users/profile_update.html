@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier le profil{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes gradient-animation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+<div class="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gray-950 overflow-hidden">
+    <div class="absolute inset-0 bg-radial-gradient-t from-gray-800 to-gray-950 opacity-50"></div>
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+
+    <div class="w-full max-w-3xl mx-auto relative z-10 bg-gray-800 bg-opacity-30 border border-gray-700 rounded-3xl p-8 md:p-12 shadow-2xl space-y-8 backdrop-blur-xl animate-fade-in">
+        
+        <div class="text-center pb-6 border-b border-gray-700">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
+                Modifier mon profil
+            </h2>
+            <p class="text-gray-400 mt-2 text-lg">Mettez à jour vos informations personnelles.</p>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="bg-red-900 border border-red-700 text-red-100 px-4 py-3 rounded-lg relative" role="alert">
+                    <strong class="font-bold">Erreur :</strong>
+                    <ul class="mt-2 list-disc list-inside">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="{{ form.username.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 flex items-center">
+                        <i class="fas fa-user mr-2 text-gray-400"></i> {{ form.username.label }}
+                    </label>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                        <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-gray-400"></i> {{ form.email.label }}
+                    </label>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.city.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-gray-400"></i> {{ form.city.label }}
+                    </label>
+                    {{ form.city }}
+                    {% for error in form.city.errors %}
+                        <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.phone_number.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 flex items-center">
+                        <i class="fas fa-phone-alt mr-2 text-gray-400"></i> {{ form.phone_number.label }}
+                    </label>
+                    {{ form.phone_number }}
+                    {% for error in form.phone_number.errors %}
+                        <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <label for="{{ form.bio.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-gray-400"></i> À propos de moi
+                </label>
+                {{ form.bio }}
+                {% for error in form.bio.errors %}
+                    <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-4">
+                <label for="{{ form.profile_picture.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2 flex items-center">
+                    <i class="fas fa-image mr-2 text-gray-400"></i> Photo de profil
+                </label>
+                {{ form.profile_picture }}
+                {% if user.profile_picture %}
+                    <p class="text-gray-400 text-xs mt-2">Image actuelle: <a href="{{ user.profile_picture.url }}" target="_blank" class="text-blue-400 hover:underline">Voir</a></p>
+                {% endif %}
+                {% for error in form.profile_picture.errors %}
+                    <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center">
+                <i class="fas fa-save mr-3"></i> Enregistrer les modifications
+            </button>
+        </form>
+        
+        <p class="mt-6 text-center text-gray-400">
+            <a href="{% url 'profile' %}" class="text-blue-400 hover:text-blue-300 font-semibold transition-colors duration-200">Retour au profil</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

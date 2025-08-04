@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Modifier l'annonce{% else %}Créer une annonce{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gray-950 overflow-hidden">
+    <!-- Effet de fond lumineux -->
+    <div class="absolute inset-0 bg-radial-gradient-t from-gray-800 to-gray-950 opacity-50"></div>
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+
+    <!-- Conteneur principal -->
+    <div class="w-full max-w-lg mx-auto relative z-10 bg-gray-800 bg-opacity-30 border border-gray-700 rounded-3xl p-8 md:p-12 shadow-2xl space-y-8 backdrop-blur-xl animate-fade-in">
+        
+        <div class="text-center pb-6 border-b border-gray-700">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-orange-400">
+                {% if form.instance.pk %}Modifier l'annonce{% else %}Créer une annonce{% endif %}
+            </h2>
+            <p class="text-gray-400 mt-2 text-lg">Mettez en valeur votre objet.</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="bg-red-900 border border-red-700 text-red-100 px-4 py-3 rounded-lg" role="alert">
+                    <strong class="font-bold">Erreur :</strong>
+                    <ul class="mt-2 list-disc list-inside">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div>
+                <label for="{{ form.title.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2">Titre</label>
+                <input type="text" name="{{ form.title.name }}" id="{{ form.title.id_for_label }}" value="{{ form.title.value|default:'' }}" class="w-full py-3 px-4 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-gray-700 bg-opacity-50 border-gray-600 placeholder-gray-400 rounded-lg text-lg transition duration-200">
+                {% for error in form.title.errors %}
+                    <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label for="{{ form.description.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2">Description détaillée</label>
+                <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="w-full py-3 px-4 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-gray-700 bg-opacity-50 border-gray-600 placeholder-gray-400 rounded-lg text-lg transition duration-200" rows="4">{{ form.description.value|default:'' }}</textarea>
+                {% for error in form.description.errors %}
+                    <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label for="{{ form.photo.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2">Photo de l'objet</label>
+                <input type="file" name="{{ form.photo.name }}" id="{{ form.photo.id_for_label }}" class="w-full text-white bg-gray-700 bg-opacity-50 border-gray-600 rounded-lg py-3 px-4 transition duration-200">
+                {% for error in form.photo.errors %}
+                    <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label for="{{ form.category.id_for_label }}" class="block text-gray-300 text-sm font-bold mb-2">Catégorie</label>
+                <select name="{{ form.category.name }}" id="{{ form.category.id_for_label }}" class="w-full py-3 px-4 text-white leading-tight focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-gray-700 bg-opacity-50 border-gray-600 placeholder-gray-400 rounded-lg text-lg transition duration-200">
+                    {% for value, label in form.category.field.choices %}
+                        <option value="{{ value }}" {% if value == form.category.value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                {% for error in form.category.errors %}
+                    <p class="text-red-500 text-sm italic mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center">
+                <i class="fas fa-check mr-3"></i> Confirmer
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

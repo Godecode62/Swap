@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pas d'objets disponibles{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gray-950 text-gray-200">
+    <div class="w-full max-w-xl mx-auto p-8 relative z-10 text-center bg-gray-900 rounded-3xl shadow-2xl backdrop-blur-xl border border-gray-700 space-y-6">
+        <h1 class="text-4xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-500">
+            Impossible de démarrer un troc
+        </h1>
+        <p class="text-lg text-gray-300">
+            Désolé, <span class="font-bold text-white">{{ other_user.username }}</span> n'a pas encore d'objets disponibles pour le troc.
+        </p>
+        <p class="text-gray-400">
+            Veuillez vérifier son profil plus tard.
+        </p>
+        <a href="{% url 'public_profile' pk=other_user.pk %}" class="inline-flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+            <i class="fas fa-arrow-left mr-2"></i> Retourner au profil
+        </a>
+    </div>
+</div>
+{% endblock %}

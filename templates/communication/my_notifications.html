@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mes notifications{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen py-16 px-4 bg-gray-950 overflow-hidden font-sans text-gray-200 flex justify-center">
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+
+    <div class="w-full max-w-4xl mx-auto p-8 relative z-10 bg-gray-900 rounded-3xl shadow-2xl backdrop-blur-xl border border-gray-700 animate-fade-in-up">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 mb-10 animate-shine text-center">
+            Mes notifications
+        </h1>
+
+        {% if notifications %}
+            <div class="space-y-6">
+                {% for notification in notifications %}
+                    {% if notification.trade_offer %}
+                        <a href="{% url 'trade_messages' pk=notification.trade_offer.pk %}" class="block">
+                            <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex items-start md:items-center justify-between border border-gray-700 transition-transform transform hover:scale-105 hover:bg-gray-700 duration-300 {% if not notification.is_read %}border-blue-500{% endif %}">
+                                <div class="flex-1">
+                                    <p class="text-gray-200 text-lg {% if not notification.is_read %}font-bold{% endif %}">{{ notification.message }}</p>
+                                    <p class="text-gray-400 text-sm mt-1">Reçu le {{ notification.created_at|date:"d M Y à H:i" }}</p>
+                                </div>
+                                {% if not notification.is_read %}
+                                    <span class="ml-4 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white animate-pulse">
+                                        Nouveau
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% else %}
+                        <div class="bg-gray-800 p-6 rounded-2xl shadow-lg flex items-start md:items-center justify-between border border-gray-700">
+                            <div class="flex-1">
+                                <p class="text-gray-200 text-lg">{{ notification.message }}</p>
+                                <p class="text-gray-400 text-sm mt-1">Reçu le {{ notification.created_at|date:"d M Y à H:i" }}</p>
+                            </div>
+                            {% if not notification.is_read %}
+                                <span class="ml-4 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500 text-white">
+                                    Nouveau
+                                </span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700">
+                <p class="text-gray-400 text-lg">Vous n'avez pas de nouvelles notifications.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Supprimer l'annonce{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gray-950 overflow-hidden">
+    <div class="absolute inset-0 bg-radial-gradient-t from-gray-800 to-gray-950 opacity-50"></div>
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+
+    <div class="w-full max-w-lg mx-auto relative z-10 bg-gray-800 bg-opacity-30 border border-gray-700 rounded-3xl p-8 md:p-12 shadow-2xl space-y-8 backdrop-blur-xl animate-fade-in text-center">
+        
+        <div class="text-center pb-6 border-b border-gray-700">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">
+                Supprimer l'annonce
+            </h2>
+            <p class="text-gray-400 mt-2 text-lg">Êtes-vous sûr de vouloir supprimer "{{ object.title }}" ?</p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-lg flex items-center justify-center">
+                <i class="fas fa-trash-alt mr-3"></i> Confirmer la suppression
+            </button>
+            <a href="{% url 'user_items_dashboard' %}" class="block text-center text-gray-400 hover:text-gray-300 mt-4 transition-colors">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

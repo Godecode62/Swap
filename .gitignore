@@ -1,0 +1,34 @@
+# Dossiers et fichiers Python
+__pycache__/
+*.pyc
+.env
+venv/
+env/
+
+# Fichiers de base de données
+db.sqlite3
+*.log
+
+# Fichiers et dossiers spécifiques à Node.js (pour Tailwind)
+node_modules/
+package-lock.json
+# Vous pouvez inclure package.json si vous ne voulez pas qu'il soit versionné,
+# mais il est généralement recommandé de le committer pour suivre les dépendances.
+
+# Fichiers sensibles et configurations locales
+local_settings.py  # Si vous en avez un pour les clés secrètes
+# Il est crucial que votre SECRET_KEY ne soit PAS dans un fichier public !
+
+# Dossiers d'IDE et de système d'exploitation
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Fichiers et dossiers créés par Django
+media/  # Fichiers téléversés par les utilisateurs
+static_root/  # Dossier généré par `collectstatic`
+
+# Dossiers que vous voulez committer mais dont vous ne voulez pas des contenus
+# .gitkeep est un fichier vide pour garder les dossiers vides sous Git
+!**/staticfiles/.gitkeep

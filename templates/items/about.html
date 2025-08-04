@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}À Propos - SwapIt{% endblock title %}
+
+{% block content %}
+
+    <section class="relative text-white py-20 px-6 rounded-3xl shadow-2xl mb-16 overflow-hidden transform skew-y-1 -mt-8"
+    style="background-image: url('{% static 'images/swap.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="absolute inset-0 bg-gray-950 opacity-80 z-0"></div> 
+        <div class="max-w-6xl mx-auto text-center relative z-10 transform -skew-y-1">
+            <h1 class="text-6xl md:text-8xl font-extrabold leading-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-400">
+                Avec SwapIt, <span class="text-lime-400">tout se troque</span>.
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+                SwapIt, c'est bien plus qu'une plateforme, c'est une philosophie de partage et de liberté. C'est l'idée de donner une seconde vie aux objets et de valoriser les échanges.
+            </p>
+            <a href="{% url 'item_list' %}" class="inline-flex items-center bg-transparent text-white border-2 border-white hover:bg-white hover:text-purple-700 font-bold py-4 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-105 group text-xl">
+                <i class="fas fa-eye mr-3 text-3xl group-hover:scale-110 transition"></i> Voir toutes les Annonces
+            </a>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <h2 class="text-5xl font-extrabold text-white text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-400">Comment fonctionne SwapIt ?</h2>
+        <div class="max-w-4xl mx-auto space-y-16">
+
+            <div class="flex flex-col md:flex-row items-center bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-700 transform transition duration-300 hover:scale-105">
+                <div class="flex-shrink-0 w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-4xl font-extrabold shadow-lg z-10 mb-6 md:mb-0 md:mr-8">1</div>
+                <div>
+                    <h3 class="text-3xl font-semibold text-white mb-2">Publiez vos objets.</h3>
+                    <p class="text-gray-400 text-lg">
+                        C'est l'étape la plus simple ! Prenez de belles photos de l'objet que vous souhaitez échanger. Donnez une description détaillée et honnête.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row-reverse items-center bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-700 transform transition duration-300 hover:scale-105">
+                <div class="flex-shrink-0 w-20 h-20 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center text-white text-4xl font-extrabold shadow-lg z-10 mb-6 md:mb-0 md:ml-8">2</div>
+                <div>
+                    <h3 class="text-3xl font-semibold text-white mb-2 text-right md:text-left">Trouvez et proposez.</h3>
+                    <p class="text-gray-400 text-lg text-right md:text-left">
+                        Explorez nos annonces et trouvez l'objet de vos rêves. Faites une offre d'échange avec l'un de vos propres biens.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-700 transform transition duration-300 hover:scale-105">
+                <div class="flex-shrink-0 w-20 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-4xl font-extrabold shadow-lg z-10 mb-6 md:mb-0 md:mr-8">3</div>
+                <div>
+                    <h3 class="text-3xl font-semibold text-white mb-2">Échangez et profitez !</h3>
+                    <p class="text-gray-400 text-lg">
+                        Une fois votre offre acceptée, mettez-vous d'accord sur les modalités de l'échange. Troquez, et repartez avec un sourire !
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-purple-700 to-pink-700 p-8 rounded-3xl shadow-xl text-center mt-16">
+                <h3 class="text-3xl font-extrabold text-white mb-4">Un troc peut se faire contre de l'argent.</h3>
+                <p class="text-purple-100 text-lg">
+                    Sur SwapIt, nous croyons qu'on peut <span class="text-yellow-300">tout troquer</span>, même de l'argent !
+                    Si vous le souhaitez, vous pouvez créer une annonce pour un objet et, en échange, demander à l'autre utilisateur de créer une annonce pour un <span class="text-yellow-300">objet argent</span> spécifiant le montant souhaité. C'est une façon simple de faire un échange en toute flexibilité !
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gradient-to-br from-purple-700 to-indigo-800 text-white py-20 px-6 rounded-3xl shadow-2xl text-center mt-16 transform skew-y-1">
+        <div class="max-w-4xl mx-auto relative z-10 transform -skew-y-1">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-6 animate-pulse-light bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-300">
+                Prêt(e) à commencer l'aventure ?
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 opacity-90">
+                Rejoignez notre communauté de troqueurs dès aujourd'hui.
+            </p>
+            <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
+                <i class="fas fa-user-plus mr-3 text-3xl"></i> Je M'Inscris Gratuitement !
+            </a>
+        </div>
+    </section>
+
+{% endblock content %}

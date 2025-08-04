@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Conditions d'Utilisation - SwapIt{% endblock title %}
+
+{% block content %}
+
+    <!-- Section d'introduction avec un titre et un sous-titre élégants -->
+    <section class="relative text-white py-20 px-6 rounded-3xl shadow-2xl mb-16 overflow-hidden transform skew-y-1 -mt-8"
+    style="background-image: url('{% static 'images/swap.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="absolute inset-0 bg-gray-950 opacity-80 z-0"></div> 
+        <div class="max-w-6xl mx-auto text-center relative z-10 transform -skew-y-1">
+            <h1 class="text-6xl md:text-8xl font-extrabold leading-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-400">
+                Clarté et Confiance.
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+                Utiliser SwapIt, c'est simple et sécurisé. Voici les règles du jeu pour que l'expérience soit agréable pour tous.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section principale des conditions d'utilisation -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto bg-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700">
+            
+            <h2 class="text-4xl font-extrabold text-white text-center mb-10 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-400">
+                Nos engagements et les vôtres.
+            </h2>
+
+            <div class="space-y-10 text-gray-400">
+                <!-- Point 1 : L'inscription -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-user-check text-green-400 mr-3"></i> Qui peut utiliser SwapIt ?
+                    </h3>
+                    <p>
+                        SwapIt est ouvert à tous, mais nous attendons de chaque membre le respect de la communauté. En vous inscrivant, vous vous engagez à être honnête, respectueux et à suivre nos règles.
+                    </p>
+                </div>
+
+                <!-- Point 2 : Le fonctionnement -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-box text-cyan-400 mr-3"></i> Comment ça fonctionne ?
+                    </h3>
+                    <p>
+                        C'est facile ! Vous publiez un objet que vous n'utilisez plus. Vous cherchez ensuite un objet qui vous plaît chez un autre membre et vous lui faites une proposition d'échange. L'échange doit toujours être un accord entre deux personnes. SwapIt est la plateforme qui vous connecte, mais la transaction finale est entre vous et l'autre "Swapper".
+                    </p>
+                </div>
+
+                <!-- Point 3 : Vos responsabilités -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-gavel text-red-400 mr-3"></i> Vos responsabilités
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Soyez toujours honnête sur l'état de vos objets.</li>
+                        <li>Respectez les autres membres de la communauté. Pas de langage offensant ni de harcèlement.</li>
+                        <li>Ne proposez pas d'objets illégaux, dangereux ou contraires à la morale.</li>
+                        <li>Protégez vos informations personnelles et ne partagez pas vos coordonnées bancaires.</li>
+                    </ul>
+                </div>
+
+                <!-- Point 4 : Le rôle de SwapIt -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <i class="fas fa-shield-alt text-blue-400 mr-3"></i> Le rôle de SwapIt
+                    </h3>
+                    <p>
+                        Nous nous engageons à vous fournir un espace sûr et facile d'utilisation pour le troc. Nous protégeons vos données et nous sommes là pour vous aider en cas de problème. Cependant, nous ne sommes pas responsables des échanges eux-mêmes, car ils sont des accords privés entre les utilisateurs.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section d'appel à l'action -->
+    <section class="bg-gradient-to-br from-purple-700 to-indigo-800 text-white py-20 px-6 rounded-3xl shadow-2xl text-center mt-16 transform skew-y-1">
+        <div class="max-w-4xl mx-auto relative z-10 transform -skew-y-1">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-6 animate-pulse-light bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-300">
+                Prêt(e) à commencer ?
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 opacity-90">
+                Maintenant que vous connaissez les règles, rejoignez-nous pour troquer en toute confiance !
+            </p>
+            <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
+                <i class="fas fa-user-plus mr-3 text-3xl"></i> Je M'Inscris Gratuitement !
+            </a>
+        </div>
+    </section>
+
+{% endblock content %}

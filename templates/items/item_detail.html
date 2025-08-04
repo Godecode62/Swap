@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ item.title }}{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen py-16 px-4 bg-gray-950 overflow-hidden font-sans text-gray-200">
+    <div class="absolute inset-0 bg-radial-gradient-t from-gray-800 to-gray-950 opacity-50"></div>
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+
+    <div class="w-full max-w-5xl mx-auto relative z-10 bg-gray-900 bg-opacity-80 border border-gray-700 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-xl animate-fade-in">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700">
+                <img src="{{ item.photo.url }}" alt="{{ item.title }}" class="w-full h-auto object-cover transition-transform duration-300 hover:scale-105">
+            </div>
+
+            <div class="flex flex-col justify-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">{{ item.title }}</h1>
+                <p class="text-gray-400 text-lg mb-6">Posté par 
+                    <a href="{% url 'public_profile' item.owner.pk %}" class="text-yellow-400 font-semibold hover:underline">{{ item.owner.username }}</a>
+                </p>
+                
+                <p class="text-gray-300 text-xl leading-relaxed mb-6">{{ item.description|linebreaksbr }}</p>
+                
+                <div class="space-y-3 mb-8 text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-tag w-6"></i>
+                        <p>Catégorie : <span class="text-gray-400 font-semibold">{{ item.category.name }}</span></p>
+                    </div>
+
+                    <div class="flex items-center">
+                        <i class="fas fa-calendar-alt w-6"></i>
+                        <p>Posté le : <span class="text-gray-400 font-semibold">{{ item.created_at|date:"d F Y" }}</span></p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    {% if user.is_authenticated %}
+                        {% if user == item.owner %}
+                            <div class="flex flex-col space-y-4">
+                                <a href="{% url 'item_update' item.pk %}" class="w-full text-center bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                                    Modifier mon annonce
+                                </a>
+                                
+                                <form method="post" action="{% url 'toggle_item_availability' item.pk %}" class="w-full">
+                                    {% csrf_token %}
+                                    {% if item.is_available %}
+                                        <button type="submit" class="w-full text-center bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                                            Rendre indisponible
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="w-full text-center bg-gradient-to-r from-green-500 to-lime-600 hover:from-green-600 hover:to-lime-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+                                            Rendre disponible
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        {% else %}
+                            {% if item.is_available %}
+                                <a href="{% url 'create_trade_offer' item.pk %}" class="w-full text-center inline-block bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-semibold py-4 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-lg">
+                                    Faire une proposition de troc
+                                </a>
+                            {% else %}
+                                <p class="text-red-400 text-center font-bold">Cet objet n'est pas disponible pour le moment.</p>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <p class="text-gray-400 text-center">
+                            <a href="{% url 'login' %}" class="font-bold text-yellow-400 hover:underline">Connectez-vous</a> pour faire une proposition.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

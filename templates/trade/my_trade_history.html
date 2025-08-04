@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Historique des transactions{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen py-12 px-4 bg-gray-950 overflow-hidden font-sans text-gray-200">
+    <div class="absolute inset-0 bg-radial-gradient-t from-gray-800 to-gray-950 opacity-50"></div>
+    <div class="absolute inset-0 z-0 opacity-20">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                    <path d="M 16 0 L 16 32 M 0 16 L 32 16" fill="none" stroke="rgba(255, 255,255, 0.05)" stroke-width="1"></path>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)"></rect>
+        </svg>
+    </div>
+
+    <div class="w-full max-w-5xl mx-auto relative z-10 p-8 md:p-12 space-y-8 animate-fade-in">
+        
+        <div class="text-center">
+            {% if status_filter == 'pending' %}
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">Offres en attente</h1>
+            {% elif status_filter == 'accepted' %}
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">Offres acceptées</h1>
+            {% elif status_filter == 'rejected' %}
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">Offres refusées</h1>
+            {% elif status_filter == 'cancelled' %}
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">Offres annulées</h1>
+            {% endif %}
+            <p class="text-gray-400 mt-2 text-lg">Consultez l'historique de vos transactions.</p>
+        </div>
+
+        <div class="mb-8 w-full max-w-2xl mx-auto animate-fade-in">
+            <form action="{% url 'trade_history' status=status_filter %}" method="get" class="flex items-center bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-full p-2 border border-gray-700 shadow-lg transition-all duration-300 focus-within:ring-2 focus-within:ring-cyan-500">
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="{{ query }}"
+                    placeholder="Rechercher une transaction..." 
+                    class="flex-grow bg-transparent text-white placeholder-gray-400 focus:outline-none px-4 py-2 text-lg"
+                >
+                <button type="submit" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        {% if trade_offers %}
+            <div class="space-y-6">
+                {% for trade in trade_offers %}
+                    <div class="bg-gray-800 bg-opacity-30 border border-gray-700 rounded-3xl p-6 shadow-xl backdrop-blur-xl transition transform hover:scale-[1.01] duration-300">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+                            <div class="flex items-center space-x-4">
+                                <i class="fas fa-handshake text-3xl text-purple-400"></i>
+                                <div>
+                                    <p class="text-lg font-bold text-white">
+                                        {% if trade.offered_by == request.user %}
+                                            Vous avez proposé {{ trade.item_offered.title }}
+                                        {% else %}
+                                            <a href="{% url 'public_profile' pk=trade.offered_by.pk %}" class="text-purple-400 font-semibold hover:underline">
+                                                {{ trade.offered_by.username }}
+                                            </a> a proposé {{ trade.item_offered.title }}
+                                        {% endif %}
+                                        pour
+                                        {% if trade.item_requested.owner == request.user %}
+                                            votre {{ trade.item_requested.title }}
+                                        {% else %}
+                                            son {{ trade.item_requested.title }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="text-sm text-gray-400 mt-1">
+                                        {% if trade.status == 'accepted' %}
+                                            <span class="text-green-400 font-semibold">Troc accepté le {{ trade.created_at|date:"d F Y" }}</span>
+                                        {% elif trade.status == 'rejected' %}
+                                            <span class="text-red-400 font-semibold">Troc refusé le {{ trade.created_at|date:"d F Y" }}</span>
+                                        {% elif trade.status == 'cancelled' %}
+                                            <span class="text-gray-400 font-semibold">Offre annulée le {{ trade.created_at|date:"d F Y" }}</span>
+                                        {% elif trade.status == 'pending' %}
+                                            <span class="text-yellow-400 font-semibold">Offre en attente depuis le {{ trade.created_at|date:"d F Y" }}</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap space-x-2 space-y-2 mt-4 md:mt-0">
+                                {% if status_filter == 'pending' or status_filter == 'accepted' %}
+                                <a href="{% url 'trade_messages' pk=trade.pk %}" class="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2 px-4 rounded-full transition duration-300 text-sm whitespace-nowrap">
+                                    Voir la discussion
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'item_detail' trade.item_offered.pk %}" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold py-2 px-4 rounded-full transition duration-300 text-sm whitespace-nowrap">
+                                    Objet proposé
+                                </a>
+                                <a href="{% url 'item_detail' trade.item_requested.pk %}" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2 px-4 rounded-full transition duration-300 text-sm whitespace-nowrap">
+                                    Objet demandé
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-400 text-center text-xl mt-12">Aucune transaction dans cet état.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

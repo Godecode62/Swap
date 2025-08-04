@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil - SwapIt, Votre Plateforme d'Échange Ultime{% endblock title %}
+
+{% block content %}
+
+    <section class="relative text-white py-32 px-6 rounded-3xl shadow-2xl mb-16 overflow-hidden transform skew-y-1 -mt-8"
+    style="background-image: url('{% static 'images/swap.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class="absolute inset-0 bg-gray-950 opacity-80 z-0"></div> 
+        <div class="absolute inset-0 z-0 opacity-10 bg-pattern-dots"></div>
+        <div class="max-w-6xl mx-auto text-center relative z-10 transform -skew-y-1">
+            <h1 class="text-6xl md:text-8xl font-extrabold leading-tight mb-8 animate-pulse-light bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-400">
+                L'avenir de la Consommation, c'est <span class="block mt-4 md:inline-block">le Troc avec SwapIt.</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-12 opacity-90 max-w-3xl mx-auto animate-fade-in-up delay-200">
+                Libérez-vous des prix ! Échangez vos objets inutilisés contre des trésors qui vous passionnent. Une nouvelle vie pour vos affaires, un gain pour votre portefeuille.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-6 sm:space-y-0 sm:space-x-8 animate-fade-in-up delay-400">
+                <a href="" class="inline-flex items-center bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-105 group text-xl">
+                    <i class="fas fa-hand-holding-usd mr-3 text-3xl group-hover:rotate-6 transition"></i> Je veux Troquer !
+                </a>
+                <a href="{% url 'item_list' %}" class="inline-flex items-center bg-transparent text-white border-2 border-white hover:bg-white hover:text-purple-700 font-bold py-4 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-105 group text-xl">
+                    <i class="fas fa-eye mr-3 text-3xl group-hover:scale-110 transition"></i> Voir toutes les Annonces
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <h2 class="text-5xl font-extrabold text-white text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">Pourquoi Choisir l'Échange avec SwapIt ?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+            <div class="bg-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700 transform hover:scale-105 transition duration-300 group relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-700 to-purple-700 opacity-20 blur-xl scale-150 group-hover:opacity-40 transition-all duration-500"></div>
+                <i class="fas fa-coins text-7xl text-cyan-400 mb-8 relative z-10 group-hover:rotate-6 transition"></i>
+                <h3 class="text-3xl font-semibold text-white mb-4 relative z-10">Zéro Dépense</h3>
+                <p class="text-gray-400 text-lg relative z-10">Oubliez le porte-monnaie ! Obtenez ce que vous voulez sans dépenser un centime.</p>
+            </div>
+            <div class="bg-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700 transform hover:scale-105 transition duration-300 group relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-green-600 to-teal-600 opacity-20 blur-xl scale-150 group-hover:opacity-40 transition-all duration-500"></div>
+                <i class="fas fa-recycle text-7xl text-lime-400 mb-8 relative z-10 group-hover:-rotate-6 transition"></i>
+                <h3 class="text-3xl font-semibold text-white mb-4 relative z-10">Écologique & Durable</h3>
+                <p class="text-gray-400 text-lg relative z-10">Donnez une seconde vie aux objets. Moins de déchets, plus de sens.</p>
+            </div>
+            <div class="bg-gray-800 p-10 rounded-3xl shadow-xl border border-gray-700 transform hover:scale-105 transition duration-300 group relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-pink-600 to-red-600 opacity-20 blur-xl scale-150 group-hover:opacity-40 transition-all duration-500"></div>
+                <i class="fas fa-lightbulb text-7xl text-orange-400 mb-8 relative z-10 group-hover:rotate-6 transition"></i>
+                <h3 class="text-3xl font-semibold text-white mb-4 relative z-10">Découvertes Uniques</h3>
+                <p class="text-gray-400 text-lg relative z-10">Trouvez des objets rares et des pépites que vous ne verriez pas ailleurs.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 bg-gradient-to-br from-gray-700 to-gray-800 rounded-3xl shadow-2xl mb-16">
+        <h2 class="text-5xl font-extrabold text-white text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-400">Le Troc en 3 Étapes Faciles</h2>
+        <div class="relative flex flex-col md:flex-row justify-between items-center px-4 md:px-0">
+            <div class="relative flex flex-col items-center mb-10 md:mb-0 w-full md:w-1/3">
+                <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-4xl font-extrabold shadow-lg z-10">1</div>
+                <i class="fas fa-box-open text-6xl text-cyan-300 mt-6 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2 text-center">Publiez votre Objet</h3>
+                <p class="text-gray-400 text-center max-w-xs">Décrivez ce que vous avez, ajoutez de belles photos. C'est votre trésor à troquer !</p>
+            </div>
+            <div class="hidden md:block absolute top-1/2 left-1/3 w-1/6 h-2 bg-gradient-to-r from-blue-500 to-purple-500 -translate-y-1/2">
+                <i class="fas fa-long-arrow-alt-right absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 text-3xl text-purple-500"></i>
+            </div>
+            <div class="md:hidden w-1 h-20 bg-gradient-to-b from-blue-500 to-purple-500 mb-10 relative">
+                <i class="fas fa-long-arrow-alt-down absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-3xl text-purple-500"></i>
+            </div>
+
+            <div class="relative flex flex-col items-center mb-10 md:mb-0 w-full md:w-1/3">
+                <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center text-white text-4xl font-extrabold shadow-lg z-10">2</div>
+                <i class="fas fa-search text-6xl text-lime-300 mt-6 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2 text-center">Trouvez votre Échange</h3>
+                <p class="text-gray-400 text-center max-w-xs">Explorez des milliers d'annonces ou recherchez l'objet de vos rêves.</p>
+            </div>
+            <div class="hidden md:block absolute top-1/2 left-2/3 w-1/6 h-2 bg-gradient-to-r from-green-500 to-teal-500 -translate-y-1/2">
+                <i class="fas fa-long-arrow-alt-right absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 text-3xl text-teal-500"></i>
+            </div>
+            <div class="md:hidden w-1 h-20 bg-gradient-to-b from-green-500 to-teal-500 mb-10 relative">
+                <i class="fas fa-long-arrow-alt-down absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 text-3xl text-teal-500"></i>
+            </div>
+
+            <div class="relative flex flex-col items-center w-full md:w-1/3">
+                <div class="w-24 h-24 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white text-4xl font-extrabold shadow-lg z-10">3</div>
+                <i class="fas fa-handshake text-6xl text-orange-300 mt-6 mb-4"></i>
+                <h3 class="text-2xl font-semibold text-white mb-2 text-center">Swappez et Profitez !</h3>
+                <p class="text-gray-400 text-lg relative z-10">Connectez-vous avec l'autre swapper, échangez, et repartez avec un sourire !</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <h2 class="text-5xl font-extrabold text-white text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-400">Explorez nos Catégories</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Catégorie: Électronique -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/60A5FA?text=Électronique" alt="Électronique" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-laptop text-5xl text-cyan-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Électronique</h3>
+                    <p class="text-gray-400 text-sm mb-4">Smartphones, ordinateurs, gadgets... le futur est à portée de troc.</p>
+                    <a href="{% url 'item_list_by_category' 'electronique' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Vêtements & Accessoires -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/FDE047?text=Vêtements" alt="Vêtements & Accessoires" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-tshirt text-5xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Vêtements & Accessoires</h3>
+                    <p class="text-gray-400 text-sm mb-4">Renouvelez votre garde-robe sans dépenser d'argent.</p>
+                    <a href="{% url 'item_list_by_category' 'vetements-accessoires' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Maison & Jardin -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/FB7185?text=Maison" alt="Maison & Jardin" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-couch text-5xl text-pink-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Maison & Jardin</h3>
+                    <p class="text-gray-400 text-sm mb-4">Meubles, outils, déco... donnez un coup de frais à votre intérieur.</p>
+                    <a href="{% url 'item_list_by_category' 'maison-jardin' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Livres & Médias -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/4ade80?text=Livres" alt="Livres & Médias" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-book-open text-5xl text-green-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Livres & Médias</h3>
+                    <p class="text-gray-400 text-sm mb-4">Romans, BDs, films, jeux de société... partagez vos passions.</p>
+                    <a href="{% url 'item_list_by_category' 'livres-medias' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Enfants & Bébés -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/E57373?text=Enfants" alt="Enfants & Bébés" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-baby-carriage text-5xl text-red-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Enfants & Bébés</h3>
+                    <p class="text-gray-400 text-sm mb-4">Tout pour les tout-petits, du berceau aux jouets éducatifs.</p>
+                    <a href="{% url 'item_list_by_category' 'enfants-bebes' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Sports & Loisirs -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/65a30d?text=Sports" alt="Sports & Loisirs" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-futbol text-5xl text-lime-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Sports & Loisirs</h3>
+                    <p class="text-gray-400 text-sm mb-4">Équipements de sport, instruments de musique, jeux de société.</p>
+                    <a href="{% url 'item_list_by_category' 'sports-loisirs' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Véhicules -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/7c3aed?text=Véhicules" alt="Véhicules" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-car text-5xl text-indigo-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Véhicules</h3>
+                    <p class="text-gray-400 text-sm mb-4">Voitures, vélos, motos et pièces détachées.</p>
+                    <a href="{% url 'item_list_by_category' 'vehicules' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Catégorie: Autres -->
+            <div class="bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-700 transform hover:scale-105 transition duration-300 group relative">
+                <img src="https://placehold.co/400x250/334155/fca5a5?text=Autres" alt="Autres" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="p-6 text-center relative z-10">
+                    <i class="fas fa-ellipsis-h text-5xl text-red-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Autres</h3>
+                    <p class="text-gray-400 text-sm mb-4">Tout ce qui ne rentre pas dans les autres catégories.</p>
+                    <a href="{% url 'item_list_by_category' 'autres' %}" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-2 px-5 rounded-full text-base shadow-md transition duration-300">
+                        Explorer
+                    </a>
+                </div>
+            </div>
+            </div>
+        <div class="text-center mt-16">
+            <a href="{% url 'item_list' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
+                <i class="fas fa-boxes mr-3 text-3xl"></i> Voir Toutes les Catégories
+            </a>
+        </div>
+    </section>
+
+    <section class="bg-gradient-to-br from-purple-700 to-indigo-800 text-white py-20 px-6 rounded-3xl shadow-2xl text-center mt-16 transform skew-y-1">
+        <div class="max-w-4xl mx-auto relative z-10 transform -skew-y-1">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-6 animate-pulse-light bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-300">
+                L'objet que vous cherchez est peut-être déjà ici.
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 opacity-90">
+                Des milliers d'échanges potentiels vous attendent. Rejoignez SwapIt, c'est gratuit et ça change tout !
+            </p>
+            <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
+                <i class="fas fa-user-plus mr-3 text-3xl"></i> Je M'Inscris Gratuitement !
+            </a>
+        </div>
+    </section>
+
+{% endblock content %}
