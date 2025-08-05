@@ -166,7 +166,9 @@ STORAGES = {
         "BACKEND": "helpers.cloudflare.storages.MediaFilesStorage",
         "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS,
     },
-    "staticfiles":{}
+    "staticfiles":{
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    }
 }
 
 MEDIA_URL = f"https://{CLOUDFLARE_R2_BUCKET}.{CLOUDFLARE_R2_ENDPOINT}/"
