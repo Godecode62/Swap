@@ -92,6 +92,13 @@ class ItemDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         item = self.get_object()
         return self.request.user == item.owner
 
+    def form_valid(self, form):
+        item = self.get_object()
+        
+        item.photo.delete(save=False)
+        
+        return super().form_valid(form)
+    
 class ItemDetailView(DetailView):
     model = Item
     template_name = 'items/item_detail.html'
