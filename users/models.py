@@ -3,7 +3,6 @@ from django.db import models
 from PIL import Image
 from io import BytesIO
 from django.core.files import File
-import uuid
 import os
 
 # Fonction pour compresser les images
@@ -18,11 +17,9 @@ def compress_image(image, quality_setting=70):
     new_image = File(img_io, name=image.name)
     return new_image
 
-#  fonction pour générer le chemin ---
+# Utilise un nom de fichier prévisible pour permettre l'écrasement
 def profile_picture_path(instance, filename):
-    file_extension = os.path.splitext(filename)[1]
-    unique_filename = f'{uuid.uuid4()}{file_extension}'
-    return f'profile_pictures/{instance.username}/{unique_filename}'
+    return f'profile_pictures/{instance.username}/profile.jpg'
 
 
 class User(AbstractUser):
@@ -32,8 +29,19 @@ class User(AbstractUser):
     bio = models.TextField(blank=True, verbose_name="Biographie")
 
     def save(self, *args, **kwargs):
-        if self.profile_picture:
-            # Compression agressive pour une photo de profil 
+        # Vérifie si l'utilisateur a déjà une photo de profil et si elle est mise à jour
+        # Le 'try...except' gère le cas où l'objet n'existe pas encore
+        try:
+            old_profile_picture = User.objects.get(id=self.id).profile_picture
+        except User.DoesNotExist:
+            old_profile_picture = None
+
+        # Si l'utilisateur est nouveau ou si une nouvelle image est téléchargée
+        if self.profile_picture and old_profile_picture != self.profile_picture:
+            # Supprime l'ancienne image si elle existe
+            if old_profile_picture:
+                old_profile_picture.delete(save=False)
+
             self.profile_picture = compress_image(self.profile_picture, quality_setting=50)
 
         super().save(*args, **kwargs)

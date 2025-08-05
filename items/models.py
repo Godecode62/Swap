@@ -1,19 +1,11 @@
 import pathlib
 from django.db import models
 from users.models import User, compress_image
-import uuid
+import uuid 
 
 def item_photo_path(instance, filename):
-    instance_id = instance.id
-    if not instance.id:
-        instance_id = str(uuid.uuid4())
-    
-    file_path_obj = pathlib.Path(filename)
-    fnme = str(uuid.uuid4())
-    ext = file_path_obj.suffix 
-    
-    # Le chemin de stockage sur R2
-    return f'trade_items/{instance.owner.username}/{instance_id}/{fnme}{ext}'
+    item_id = instance.pk if instance.pk else str(uuid.uuid4())
+    return f'trade_items/{instance.owner.username}/{item_id}/main_photo.jpg'
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Nom de la catégorie")
@@ -37,13 +29,20 @@ class Item(models.Model):
     is_available = models.BooleanField(default=True, verbose_name="Disponible pour troc")
 
     def save(self, *args, **kwargs):
-        # Je ne compresse l'image que si elle est nouvelle ou a été modifiée
+        # Récupére l'ancienne photo de l'objet avant de sauvegarder les modifications
+        # Cela permet de la supprimer si une nouvelle photo est téléchargée.
         try:
-            current_photo = Item.objects.get(pk=self.pk).photo
+            old_item = Item.objects.get(pk=self.pk)
+            old_photo = old_item.photo
         except Item.DoesNotExist:
-            current_photo = None
+            old_photo = None 
 
-        if self.photo and self.photo != current_photo:
+        # Si une nouvelle photo est fournie ET qu'elle est différente de l'ancienne
+        if self.photo and old_photo and self.photo.name != old_photo.name:
+            # Supprimez l'ancienne photo du stockage Cloudflare R2
+            old_photo.delete(save=False)
+
+        if self.photo and (not old_photo or self.photo.name != old_photo.name):
             self.photo = compress_image(self.photo, quality_setting=70)
         
         super().save(*args, **kwargs)
