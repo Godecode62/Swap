@@ -159,7 +159,8 @@ CLOUDFLARE_R2_CONFIG_OPTIONS = {
     "secret_key"   :CLOUDFLARE_R2_SECRET_KEY,
     "endpoint_url" :CLOUDFLARE_R2_ENDPOINT,
     "default_acl"  : None,
-    "signature_version":"s3v4"
+    "signature_version":"s3v4",
+    "file_overwrite": True,
 }
 
 STORAGES = {
