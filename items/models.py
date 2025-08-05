@@ -1,12 +1,19 @@
+import pathlib
 from django.db import models
 from users.models import User, compress_image
-import os
 import uuid
 
 def item_photo_path(instance, filename):
-    extension = os.path.splitext(filename)[1]
-    unique_filename = f'{uuid.uuid4()}{extension}'
-    return f'trade_items/{instance.owner.username}/{unique_filename}'
+    instance_id = instance.id
+    if not instance.id:
+        instance_id = str(uuid.uuid4())
+    
+    file_path_obj = pathlib.Path(filename)
+    fnme = str(uuid.uuid4())
+    ext = file_path_obj.suffix 
+    
+    # Le chemin de stockage sur R2
+    return f'trade_items/{instance.owner.username}/{instance_id}/{fnme}{ext}'
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Nom de la catégorie")

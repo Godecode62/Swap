@@ -36,7 +36,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'items',
     'trade',
     'communication'
+    'storages',
     
 ]
 
@@ -146,9 +147,33 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+CLOUDFLARE_R2_BUCKET=config('CLOUDFLARE_R2_BUCKET')
+CLOUDFLARE_R2_ACCESS_KEY=config('CLOUDFLARE_R2_ACCESS_KEY')
+CLOUDFLARE_R2_SECRET_KEY=config('CLOUDFLARE_R2_SECRET_KEY')
+CLOUDFLARE_R2_ENDPOINT=config('CLOUDFLARE_R2_ENDPOINT')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+CLOUDFLARE_R2_CONFIG_OPTIONS = {
+    "bucket_name"  :CLOUDFLARE_R2_BUCKET,
+    "access_key"   :CLOUDFLARE_R2_ACCESS_KEY,
+    "secret_key"   :CLOUDFLARE_R2_SECRET_KEY,
+    "endpoint_url" :CLOUDFLARE_R2_ENDPOINT,
+    "default_acl"  :"public_read",
+    "signature_version":"s3v4"
+}
+
+STORAGES = {
+    "default":{
+        "BACKEND": "helpers.cloudflare.storages.MediaFilesStorage",
+        "OPTIONS": CLOUDFLARE_R2_CONFIG_OPTIONS,
+    },
+    "staticfiles":{}
+}
+
+MEDIA_URL = f"https://{CLOUDFLARE_R2_BUCKET}.{CLOUDFLARE_R2_ENDPOINT}/"
+
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
