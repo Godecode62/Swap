@@ -158,7 +158,7 @@ CLOUDFLARE_R2_CONFIG_OPTIONS = {
     "access_key"   :CLOUDFLARE_R2_ACCESS_KEY,
     "secret_key"   :CLOUDFLARE_R2_SECRET_KEY,
     "endpoint_url" :CLOUDFLARE_R2_ENDPOINT,
-    "default_acl"  :"public_read",
+    "default_acl"  : None,
     "signature_version":"s3v4"
 }
 
