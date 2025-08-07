@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Détails du Ticket #{{ ticket.id }}{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-start justify-center py-16 px-4 bg-gray-900">
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 opacity-90"></div>
+    
+    <div class="w-full max-w-4xl mx-auto relative z-10 bg-gray-800 bg-opacity-70 border border-gray-700 rounded-3xl p-8 shadow-2xl space-y-6">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white text-center">
+            Détails du Ticket #{{ ticket.id }}
+        </h1>
+        
+        <div class="bg-gray-700 bg-opacity-40 p-6 rounded-xl space-y-4">
+            <div>
+                <p class="text-gray-400 text-sm">Sujet</p>
+                <p class="text-white font-semibold text-lg">{{ ticket.subject }}</p>
+            </div>
+            <div>
+                <p class="text-gray-400 text-sm">Utilisateur</p>
+                <p class="text-white font-semibold">{{ ticket.user.username }}</p>
+            </div>
+            <div>
+                <p class="text-gray-400 text-sm">Message</p>
+                <p class="text-white leading-relaxed">{{ ticket.message|linebreaksbr }}</p>
+            </div>
+            <div>
+                <p class="text-gray-400 text-sm">Statut</p>
+                <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full
+                    {% if ticket.status == 'open' %}bg-green-100 text-green-800{% elif ticket.status == 'in_progress' %}bg-yellow-100 text-yellow-800{% elif ticket.status == 'resolved' %}bg-blue-100 text-blue-800{% else %}bg-gray-100 text-gray-800{% endif %}">
+                    {{ ticket.get_status_display }}
+                </span>
+            </div>
+            <div>
+                <p class="text-gray-400 text-sm">Date de création</p>
+                <p class="text-white">{{ ticket.created_at|date:"d F Y à H:i" }}</p>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center mt-6">
+            <a href="{% url 'admin_ticket_list' %}" class="inline-flex items-center text-gray-400 hover:text-white transition duration-300">
+                <i class="fas fa-arrow-left mr-2"></i> Retour à la liste
+            </a>
+            <div>
+                <a href="{% url 'admin_ticket_update' ticket.pk %}" class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                    Modifier le statut
+                </a>
+                <a href="{% url 'admin_ticket_delete' ticket.pk %}" class="ml-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition duration-300">
+                    Supprimer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

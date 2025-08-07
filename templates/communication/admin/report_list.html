@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Gestion des Signalements{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-start justify-center py-16 px-4 bg-gray-900">
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 opacity-90"></div>
+    
+    <div class="w-full max-w-6xl mx-auto relative z-10 bg-gray-800 bg-opacity-70 border border-gray-700 rounded-3xl p-8 shadow-2xl space-y-8">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white text-center">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-pink-400">Signalements</span>
+        </h1>
+        
+        <div class="mt-8 overflow-x-auto rounded-xl border border-gray-700 shadow-lg">
+            <table class="min-w-full divide-y divide-gray-700">
+                <thead class="bg-gray-700">
+                    <tr>
+                        <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left text-gray-200">ID</th>
+                        <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left text-gray-200">Signalé par</th>
+                        <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left text-gray-200">Type</th>
+                        <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left text-gray-200">Raison</th>
+                        <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left text-gray-200">Date</th>
+                        <th scope="col" class="py-3.5 px-4 text-sm font-semibold text-left text-gray-200">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                    {% for report in reports %}
+                    <tr class="hover:bg-gray-700 transition duration-150">
+                        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-300">{{ report.id }}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{{ report.reported_by.username }}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{{ report.get_report_type_display }}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{{ report.reason|truncatechars:50 }}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-300">{{ report.created_at|date:"d M Y" }}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                            <a href="{% url 'admin_report_detail' report.pk %}" class="text-indigo-400 hover:text-indigo-600">Voir</a>
+                            <a href="{% url 'admin_report_delete' report.pk %}" class="ml-4 text-red-400 hover:text-red-600">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-4 text-center text-sm text-gray-400">Aucun signalement.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

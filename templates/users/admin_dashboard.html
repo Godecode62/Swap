@@ -24,8 +24,9 @@
                 <div class="text-cyan-400 text-4xl"><i class="fas fa-users"></i></div>
                 <p class="text-gray-400 text-sm font-semibold">Total Utilisateurs</p>
             </div>
-            <h3 class="text-white text-5xl font-bold mb-2">100</h3>
-            <p class="text-green-400 text-sm"><i class="fas fa-arrow-up mr-1"></i> +5% ce mois-ci</p>
+            <h3 class="text-white text-5xl font-bold mb-2">{{ total_users }}</h3>
+            {# Le "+5% ce mois-ci" est un exemple statique, il faudrait une logique de calcul plus complexe pour le rendre dynamique #}
+            <p class="text-green-400 text-sm"><i class="fas fa-arrow-up mr-1"></i> +5% ce mois-ci</p> 
         </div>
 
         {# Carte Objets en Ligne #}
@@ -34,8 +35,8 @@
                 <div class="text-purple-400 text-4xl"><i class="fas fa-box-open"></i></div>
                 <p class="text-gray-400 text-sm font-semibold">Objets Actifs</p>
             </div>
-            <h3 class="text-white text-5xl font-bold mb-2">12</h3>
-            <p class="text-yellow-400 text-sm"><i class="fas fa-arrows-alt-h mr-1"></i> 12 nouveaux objets</p> {# Exemple stat #}
+            <h3 class="text-white text-5xl font-bold mb-2">{{ active_items }}</h3>
+            <p class="text-yellow-400 text-sm"><i class="fas fa-arrows-alt-h mr-1"></i> Nouvelle stat</p> {# Exemple stat #}
         </div>
 
         {# Carte Échanges Effectués #}
@@ -44,7 +45,7 @@
                 <div class="text-indigo-400 text-4xl"><i class="fas fa-exchange-alt"></i></div>
                 <p class="text-gray-400 text-sm font-semibold">Échanges Réussis</p>
             </div>
-            <h3 class="text-white text-5xl font-bold mb-2">120</h3>
+            <h3 class="text-white text-5xl font-bold mb-2">{{ completed_exchanges }}</h3>
             <p class="text-blue-400 text-sm"><i class="fas fa-check-circle mr-1"></i> +20% cette semaine</p> {# Exemple stat #}
         </div>
 
@@ -52,10 +53,10 @@
         <div class="bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-700 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 animate-fade-in-up delay-500">
             <div class="flex items-center justify-between mb-4">
                 <div class="text-pink-400 text-4xl"><i class="fas fa-comments"></i></div>
-                <p class="text-gray-400 text-sm font-semibold">Messages Non Lus</p>
+                <p class="text-gray-400 text-sm font-semibold">Notifications non lues</p>
             </div>
-            <h3 class="text-white text-5xl font-bold mb-2">21</h3>
-            <p class="text-red-400 text-sm"><i class="fas fa-exclamation-triangle mr-1"></i> 3 en attente</p> {# Exemple stat #}
+            <h3 class="text-white text-5xl font-bold mb-2">{{ unread_notifications }}</h3>
+            <p class="text-red-400 text-sm"><i class="fas fa-exclamation-triangle mr-1"></i> {{ total_reports }} signalements</p>
         </div>
     </div>
 
@@ -63,20 +64,20 @@
     <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 mb-12 animate-fade-in-up delay-600">
         <h2 class="text-3xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">Actions Rapides</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <a href="#" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
+            <a href="{% url 'admin:index' %}" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
                 <i class="fas fa-user-cog mr-3 text-2xl text-cyan-400"></i> Gérer les Utilisateurs
+            </a>
+            <a href="{% url 'admin_ticket_list' %}" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
+                <i class="fas fa-clipboard-list mr-3 text-2xl text-yellow-400"></i> Gérer les Tickets de Support ({{ open_tickets }} ouverts)
+            </a>
+            <a href="{% url 'admin_report_list' %}" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
+                <i class="fas fa-trash-alt mr-3 text-2xl text-red-400"></i> Gérer les Signalements ({{ total_reports }} au total)
             </a>
             <a href="#" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
                 <i class="fas fa-cogs mr-3 text-2xl text-purple-400"></i> Accéder à l'Admin Django
             </a>
             <a href="#" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
-                <i class="fas fa-chart-line mr-3 text-2xl text-green-400"></i> Voir les Rapports
-            </a>
-            <a href="#" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
-                <i class="fas fa-trash-alt mr-3 text-2xl text-red-400"></i> Gérer les Signalements
-            </a>
-            <a href="#" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
-                <i class="fas fa-clipboard-list mr-3 text-2xl text-yellow-400"></i> Modérer les Annonces
+                <i class="fas fa-chart-line mr-3 text-2xl text-green-400"></i> Voir les Rapports (statistiques)
             </a>
             <a href="#" class="flex items-center justify-center p-4 bg-gray-700 rounded-xl hover:bg-gray-600 transition duration-200 transform hover:scale-[1.02] shadow-md text-gray-200 text-lg font-medium">
                 <i class="fas fa-envelope-open-text mr-3 text-2xl text-orange-400"></i> Envoyer une Notification
@@ -98,25 +99,31 @@
                     </tr>
                 </thead>
                 <tbody class="bg-gray-800 divide-y divide-gray-700">
-                    {# Exemple de données, à remplacer par une boucle Django #}
+                    {% for activity in recent_activities %}
                     <tr class="hover:bg-gray-700 transition duration-150">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white"><span class="text-green-400"><i class="fas fa-check-circle mr-2"></i></span> Échange Réussi</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">"Troc de Vélo" entre UserA et UserB</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">28 Juil 2025</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-400">System</td>
+                        {% if activity.reported_by %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white"><span class="text-red-400"><i class="fas fa-flag mr-2"></i></span> Signalement</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                {% if activity.report_type == 'item' %}
+                                    "{{ activity.reason }}" sur l'annonce #{{ activity.reported_item_id }}
+                                {% else %}
+                                    "{{ activity.reason }}" sur l'utilisateur {{ activity.reported_user.username }}
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ activity.created_at|date:"d M Y" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-400">{{ activity.reported_by.username }}</td>
+                        {% elif activity.subject %}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white"><span class="text-yellow-400"><i class="fas fa-envelope-open-text mr-2"></i></span> Nouveau Ticket</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">"{{ activity.subject|truncatechars:50 }}"</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ activity.created_at|date:"d M Y" }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-400">{{ activity.user.username }}</td>
+                        {% endif %}
                     </tr>
-                    <tr class="hover:bg-gray-700 transition duration-150">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white"><span class="text-orange-400"><i class="fas fa-plus-circle mr-2"></i></span> Nouvel Objet</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">"Annonce de Console de Jeu" par UserC</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">27 Juil 2025</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-400">UserC</td>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-400">Aucune activité récente.</td>
                     </tr>
-                    <tr class="hover:bg-gray-700 transition duration-150">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white"><span class="text-red-400"><i class="fas fa-flag mr-2"></i></span> Signalement</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">"Contenu inapproprié" sur annonce #1234</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">26 Juil 2025</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-400">UserX</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

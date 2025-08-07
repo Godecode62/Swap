@@ -1,10 +1,11 @@
+from itertools import chain
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, ListView
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import get_user_model
-from communication.models import Notification
+from communication.models import Notification, Report, SupportTicket
 from trade.forms import TradeOfferForm
 from users.models import User
 from django.contrib.auth.views import PasswordChangeView
@@ -72,16 +73,40 @@ class CustomLogoutView(LoginRequiredMixin, LogoutView):
 # --- Vues de Page Spécifiques celle la c'est pour l'admin ---
 
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
+    
     template_name = 'users/admin_dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         User = get_user_model()
+        
+        # Calcul des statistiques dynamiques
         context['total_users'] = User.objects.count()
-        context['active_items'] = 78 
-        context['completed_exchanges'] = 42 
-        context['unread_messages'] = 5 
+        context['active_items'] = Item.objects.filter(is_available=True).count()
+        context['completed_exchanges'] = TradeOffer.objects.filter(status='accepted').count()
+        context['unread_notifications'] = Notification.objects.filter(is_read=False).count()
+        context['open_tickets'] = SupportTicket.objects.filter(status='open').count()
+        context['total_reports'] = Report.objects.count()
+
+        # Récupération des dernières activités
+        # Récupère les 5 derniers tickets de support
+        latest_tickets = SupportTicket.objects.all().order_by('-created_at')[:5]
+        # Récupère les 5 derniers signalements
+        latest_reports = Report.objects.all().order_by('-created_at')[:5]
+        
+        # Combine les deux listes et les trie par date de création
+        recent_activities = sorted(
+            chain(latest_tickets, latest_reports),
+            key=lambda instance: instance.created_at,
+            reverse=True
+        )
+        
+        # Ajoute la liste des activités récentes au contexte
+        context['recent_activities'] = recent_activities
+        
         return context
+
+
     
 class UserDashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'users/user_dashboard.html'

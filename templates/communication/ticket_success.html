@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Ticket envoyé !{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gray-900">
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 opacity-90"></div>
+    
+    <div class="w-full max-w-xl mx-auto relative z-10 bg-gray-800 bg-opacity-70 border border-gray-700 rounded-3xl p-8 shadow-2xl text-center">
+        <div class="flex flex-col items-center justify-center space-y-4">
+            <div class="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center text-white text-4xl">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1 class="text-3xl font-extrabold text-white">Ticket envoyé !</h1>
+            <p class="text-gray-300 text-lg">Merci, votre ticket de support a été envoyé avec succès. Notre équipe vous répondra bientôt.</p>
+            <a href="{% url 'home' %}" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition duration-300 mt-4">
+                Retourner à l'accueil
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
