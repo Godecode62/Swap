@@ -61,31 +61,37 @@
                     Sélectionnez votre objet à proposer
                 </label>
                 
-                <div id="dropdown-button" class="flex items-center justify-between w-full p-4 bg-gray-800 border border-gray-700 rounded-lg text-white cursor-pointer transition duration-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-md">
-                    <span class="text-base font-semibold">Mes objets disponibles</span>
-                    <svg id="dropdown-arrow" class="w-5 h-5 text-gray-400 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </div>
-                
-                <ul id="dropdown-list" class="absolute z-20 w-full mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl hidden max-h-60 overflow-y-auto custom-scrollbar">
-                    {% for item in user_items %}
-                    <li class="flex items-center p-3 space-x-4 cursor-pointer hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700 last:border-0" 
-                        data-value="{{ item.pk }}"
-                        data-photo-url="{{ item.photo.url }}"
-                        data-description="{{ item.description }}">
-                        <img src="{{ item.photo.url }}" alt="{{ item.title }}" class="w-12 h-12 object-cover rounded-lg flex-shrink-0 shadow">
-                        <div class="flex-grow">
-                            <h4 class="text-white font-semibold">{{ item.title }}</h4>
-                            <p class="text-gray-400 text-sm truncate">{{ item.description }}</p>
-                        </div>
-                    </li>
-                    {% empty %}
-                    <li class="p-3 text-center text-gray-400">Vous n'avez pas d'objets disponibles pour le troc.</li>
-                    {% endfor %}
-                </ul>
-                {% if not user_items %}
-                <p class="mt-2 text-sm text-red-400">Vous n'avez pas d'objets disponibles pour faire une proposition.</p>
+                {% if user_items %}
+                    <div id="dropdown-button" class="flex items-center justify-between w-full p-4 bg-gray-800 border border-gray-700 rounded-lg text-white cursor-pointer transition duration-200 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-md">
+                        <span class="text-base font-semibold">Mes objets disponibles</span>
+                        <svg id="dropdown-arrow" class="w-5 h-5 text-gray-400 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    
+                    <ul id="dropdown-list" class="absolute z-20 w-full mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl hidden max-h-60 overflow-y-auto custom-scrollbar">
+                        {% for item in user_items %}
+                        <li class="flex items-center p-3 space-x-4 cursor-pointer hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700 last:border-0" 
+                            data-value="{{ item.pk }}"
+                            data-photo-url="{{ item.photo.url }}"
+                            data-description="{{ item.description }}">
+                            <img src="{{ item.photo.url }}" alt="{{ item.title }}" class="w-12 h-12 object-cover rounded-lg flex-shrink-0 shadow">
+                            <div class="flex-grow">
+                                <h4 class="text-white font-semibold">{{ item.title }}</h4>
+                                <p class="text-gray-400 text-sm truncate">{{ item.description }}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="mt-2 text-sm text-red-400 p-4 border border-red-500 rounded-lg bg-red-900 bg-opacity-20">
+                        <p class="mb-2">
+                            Vous n'avez pas d'objets disponibles pour faire une proposition. Vous devez d'abord en créer un.
+                        </p>
+                        <p class="font-bold text-red-300">
+                             <a href="{% url 'item_create'  %}" class="text-red-300 underline hover:text-red-200 transition-colors">Cliquez ici pour créer un objet.</a> 
+                        </p>
+                    </div>
                 {% endif %}
             </div>
 
@@ -99,11 +105,11 @@
                 {% endif %}
             </div>
             
-            <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-xl">
+            <button type="submit" id="submit-button" class="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-full transition duration-300 transform hover:scale-105 shadow-xl disabled:bg-gray-600 disabled:from-gray-500 disabled:to-gray-600 disabled:cursor-not-allowed">
                 Envoyer ma proposition
             </button>
         </form>
-        <a href="{% url 'item_detail' item_requested.pk %}" class="block mt-4 text-center text-gray-500 hover:text-gray-300 transition-colors">
+        <a href="{% url 'item_list' %}" class="block mt-4 text-center text-gray-500 hover:text-gray-300 transition-colors">
             Annuler
         </a>
     </div>
@@ -153,45 +159,53 @@
         const selectedItemPhoto = document.getElementById('selected-item-photo');
         const dropdownArrow = document.getElementById('dropdown-arrow');
         const itemOfferedHidden = document.getElementById('item_offered_hidden');
+        const submitButton = document.getElementById('submit-button');
         const defaultPhotoSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' class='w-24 h-24 text-gray-500'><path d='M12 2v20M5 9h14M5 15h14'></path></svg>";
+        const userItemsExist = dropdownList && dropdownList.querySelectorAll('li').length > 0;
 
-        const dropdownItems = dropdownList.querySelectorAll('li');
-
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const value = item.getAttribute('data-value');
-                const photoUrl = item.getAttribute('data-photo-url');
-                const title = item.querySelector('h4').textContent;
-
-                itemOfferedHidden.value = value;
-                
-                selectedItemText.textContent = title;
-                selectedItemPhoto.src = photoUrl;
-                selectedItemPhoto.classList.remove('hidden');
-
-                dropdownList.classList.add('hidden');
-                dropdownArrow.classList.remove('rotate-180');
+        if (userItemsExist) {
+            dropdownButton.addEventListener('click', () => {
+                dropdownList.classList.toggle('hidden');
+                dropdownArrow.classList.toggle('rotate-180');
             });
-        });
 
-        dropdownButton.addEventListener('click', () => {
-            dropdownList.classList.toggle('hidden');
-            dropdownArrow.classList.toggle('rotate-180');
-        });
+            dropdownList.querySelectorAll('li').forEach(item => {
+                item.addEventListener('click', () => {
+                    const value = item.getAttribute('data-value');
+                    const photoUrl = item.getAttribute('data-photo-url');
+                    const title = item.querySelector('h4').textContent;
+
+                    itemOfferedHidden.value = value;
+                    selectedItemText.textContent = title;
+                    selectedItemPhoto.src = photoUrl;
+                    submitButton.disabled = false;
+
+                    dropdownList.classList.add('hidden');
+                    dropdownArrow.classList.remove('rotate-180');
+                });
+            });
+        }
 
         document.addEventListener('click', (event) => {
-            if (!dropdownButton.contains(event.target) && !dropdownList.contains(event.target)) {
-                dropdownList.classList.add('hidden');
-                dropdownArrow.classList.remove('rotate-180');
+            if (dropdownButton && dropdownList) {
+                if (!dropdownButton.contains(event.target) && !dropdownList.contains(event.target)) {
+                    dropdownList.classList.add('hidden');
+                    dropdownArrow.classList.remove('rotate-180');
+                }
             }
         });
-        
-        // Initialiser l'affichage si aucun objet n'est sélectionné
+
+        // Initialisation de l'état
         if (itemOfferedHidden.value === '') {
             selectedItemPhoto.src = defaultPhotoSvg;
-            selectedItemPhoto.classList.remove('hidden');
             selectedItemText.textContent = "--- Choisissez un objet ---";
         }
+
+        // Désactiver le bouton d'envoi si aucun objet n'est disponible ou sélectionné
+        if (!userItemsExist || itemOfferedHidden.value === '') {
+            submitButton.disabled = true;
+        }
+
     });
 </script>
 {% endblock %}

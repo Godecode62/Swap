@@ -59,31 +59,46 @@
                         <p class="text-gray-400 text-sm">{{ item.description|truncatewords:15 }}</p>
 
                         <div class="flex items-center space-x-2 text-gray-500 text-sm">
-                            {% if user.is_authenticated and user == item.owner %}
-                                <a href="{% url 'profile' %}" class="rounded-full overflow-hidden w-8 h-8 flex-shrink-0">
-                                    {% if item.owner.profile.photo %}
-                                        <img src="{{ item.owner.profile.photo.url }}" alt="{{ item.owner.username }}" class="w-full h-full object-cover">
-                                    {% else %}
-                                        <img src="{% static 'images/avatar.png' %}" alt="Photo de profil par défaut" class="w-full h-full object-cover">
-                                    {% endif %}
-                                </a>
-                                <span>Posté par 
-                                    <a href="{% url 'profile' %}">
-                                        <span class="text-green-400 font-semibold">vous</span>
+                            {% if user.is_authenticated %}
+                                {% if user == item.owner %}
+                                    <a href="{% url 'profile' %}" class="rounded-full overflow-hidden w-8 h-8 flex-shrink-0">
+                                        {% if item.owner.profile.photo %}
+                                            <img src="{{ item.owner.profile.photo.url }}" alt="{{ item.owner.username }}" class="w-full h-full object-cover">
+                                        {% else %}
+                                            <img src="{% static 'images/avatar.png' %}" alt="Photo de profil par défaut" class="w-full h-full object-cover">
+                                        {% endif %}
                                     </a>
-                                </span>
+                                    <span>Posté par 
+                                        <a href="{% url 'profile' %}">
+                                            <span class="text-green-400 font-semibold">vous</span>
+                                        </a>
+                                    </span>
+                                {% else %}
+                                    <a href="{% url 'public_profile' item.owner.pk %}" class="rounded-full overflow-hidden w-8 h-8 flex-shrink-0">
+                                        {% if item.owner.profile.photo %}
+                                            <img src="{{ item.owner.profile.photo.url }}" alt="{{ item.owner.username }}" class="w-full h-full object-cover">
+                                        {% else %}
+                                            <img src="{% static 'images/avatar.png' %}" alt="Photo de profil par défaut" class="w-full h-full object-cover">
+                                        {% endif %}
+                                    </a>
+                                    <span>Posté par 
+                                        <a href="{% url 'public_profile' item.owner.pk %}" class="text-yellow-400 font-semibold hover:underline">
+                                            {{ item.owner.username }}
+                                        </a>
+                                    </span>
+                                {% endif %}
                             {% else %}
-                                <a href="{% url 'public_profile' item.owner.pk %}" class="rounded-full overflow-hidden w-8 h-8 flex-shrink-0">
+                                <span class="rounded-full overflow-hidden w-8 h-8 flex-shrink-0">
                                     {% if item.owner.profile.photo %}
                                         <img src="{{ item.owner.profile.photo.url }}" alt="{{ item.owner.username }}" class="w-full h-full object-cover">
                                     {% else %}
                                         <img src="{% static 'images/avatar.png' %}" alt="Photo de profil par défaut" class="w-full h-full object-cover">
                                     {% endif %}
-                                </a>
+                                </span>
                                 <span>Posté par 
-                                    <a href="{% url 'public_profile' item.owner.pk %}" class="text-yellow-400 font-semibold hover:underline">
+                                    <span class="text-yellow-400 font-semibold">
                                         {{ item.owner.username }}
-                                    </a>
+                                    </span>
                                 </span>
                             {% endif %}
                         </div>

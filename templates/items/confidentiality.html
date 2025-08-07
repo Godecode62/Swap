@@ -83,18 +83,21 @@
     </section>
 
     <!-- Section d'appel à l'action -->
-    <section class="bg-gradient-to-br from-purple-700 to-indigo-800 text-white py-20 px-6 rounded-3xl shadow-2xl text-center mt-16 transform skew-y-1">
-        <div class="max-w-4xl mx-auto relative z-10 transform -skew-y-1">
-            <h2 class="text-5xl md:text-6xl font-extrabold mb-6 animate-pulse-light bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-300">
-                Envie de commencer à troquer ?
-            </h2>
-            <p class="text-xl md:text-2xl mb-10 opacity-90">
-                Rejoignez la communauté SwapIt pour donner une seconde vie à vos objets.
-            </p>
-            <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
-                <i class="fas fa-user-plus mr-3 text-3xl"></i> Je M'Inscris Gratuitement !
-            </a>
-        </div>
-    </section>
+    {% if not request.user.is_authenticated %}
+        <section class="bg-gradient-to-br from-purple-700 to-indigo-800 text-white py-20 px-6 rounded-3xl shadow-2xl text-center mt-16 transform skew-y-1">
+            <div class="max-w-4xl mx-auto relative z-10 transform -skew-y-1">
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 animate-pulse-light bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-yellow-300">
+                    Envie de commencer à troquer ?
+                </h2>
+                <p class="text-xl md:text-2xl mb-10 opacity-90">
+                    Rejoignez la communauté SwapIt pour donner une seconde vie à vos objets.
+                </p>
+                <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
+                    <i class="fas fa-user-plus mr-3 text-3xl"></i> Je M'Inscris Gratuitement !
+                </a>
+            </div>
+        </section>
+
+    {% endif %}
 
 {% endblock content %}

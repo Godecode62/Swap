@@ -18,11 +18,11 @@
                 {% endif %}
             </div>
             
-            <div class="flex-1 text-center md:text-left space-y-2">
-                <h1 class="text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+            <div class="flex-1 text-center md:text-left space-y-2 min-w-0 overflow-hidden">
+                <h1 class="text-4xl lg:text-5xl font-extrabold text-white leading-tight break-all w-full">
                     <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">{{ profile_user.username }}</span>
                 </h1>
-                <p class="text-gray-300 text-lg italic leading-relaxed">
+                <p class="text-gray-300 text-lg italic leading-relaxed break-words max-w-full">
                     {{ profile_user.bio|default:"L'échange est ma passion, donner une seconde vie aux objets ma mission. J'ai hâte de découvrir ce que la communauté a à offrir" }}
                 </p>
                 <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
@@ -87,7 +87,7 @@
                             <a href="{% url 'item_detail' item.pk %}">
                                 <img src="{{ item.photo.url }}" alt="{{ item.title }}" class="w-full h-48 object-cover">
                                 <div class="p-4">
-                                    <h3 class="text-lg font-semibold text-white">{{ item.title }}</h3>
+                                    <h3 class="text-lg font-semibold text-white break-words">{{ item.title }}</h3>
                                     <p class="text-gray-400 text-sm">{{ item.category.name|default:"Sans catégorie" }}</p>
                                 </div>
                             </a>

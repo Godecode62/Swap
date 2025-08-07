@@ -22,7 +22,6 @@ TEMPLATES_DIR = BASE_DIR / 'templates'
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
 
@@ -83,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'items.context_processors.categories_processor',
+                'communication.context_processors.unread_notifications_count',
             ],
         },
     },

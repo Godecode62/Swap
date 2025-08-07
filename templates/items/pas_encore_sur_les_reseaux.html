@@ -35,9 +35,12 @@
                 Mais pas d'inquiétude ! Nous sommes en train de préparer notre arrivée sur vos réseaux sociaux préférés. Suivez-nous de près, car nous vous annoncerons notre lancement très bientôt.
             </p>
 
-            <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
-                <i class="fas fa-user-plus mr-3 text-3xl"></i> En attendant, inscrivez-vous !
-            </a>
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'signup' %}" class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-500 hover:to-red-600 text-white font-bold py-4 px-12 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-xl">
+                    <i class="fas fa-user-plus mr-3 text-3xl"></i> En attendant, inscrivez-vous !
+                </a>
+            {% endif %}
+            
         </div>
     </section>
 

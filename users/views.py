@@ -58,6 +58,13 @@ class SignUpView(UserNotAuthenticatedMixin, CreateView):
 class CustomLoginView(UserNotAuthenticatedMixin, LoginView):
     template_name = 'users/login.html'
     redirect_authenticated_user = True
+    success_url = reverse_lazy('user_dashboard')
+    
+    def get_success_url(self):
+        if self.request.user.is_authenticated:
+            return reverse('user_dashboard')
+        return super().get_success_url()
+
 
 class CustomLogoutView(LoginRequiredMixin, LogoutView):
     next_page = reverse_lazy('login')
